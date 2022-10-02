@@ -120,9 +120,15 @@ def make_repeater(func, n):
     5
     """
     "*** YOUR CODE HERE ***"
-    if n == 1:
-        return func(n)
-    return func(make_repeater(func, n-1))
+    # def f(x):
+    #     res = x
+    #     k = 0
+    #     while k < n:
+    #         res = func(res)
+    #         k += 1
+    #     return res
+    # return f            
+    return accumulate(compose1, lambda x: x, n, lambda k: func)
 
 def zero(f):
     return lambda x: x
