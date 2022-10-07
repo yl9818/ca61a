@@ -1,4 +1,7 @@
 
+from regex import R
+
+
 def lambda_curry2(func):
     """
     Returns a Curried version of a two-argument function FUNC.
@@ -15,9 +18,11 @@ def lambda_curry2(func):
     3
     """
     "*** YOUR CODE HERE ***"
-    return ______
-
-
+    def fx(x):
+        def fy(y):
+            return func(x, y)
+        return fy
+    return fx
 
 def count_cond(condition):
     """Returns a function with one parameter N that counts all the numbers from
@@ -47,8 +52,13 @@ def count_cond(condition):
     8
     """
     "*** YOUR CODE HERE ***"
-
-
+    def f(x):
+        count = 0
+        for i in range(x):
+            if condition(x, i+1):
+                count += 1
+        return count
+    return f
 
 def both_paths(sofar="S"):
     """
@@ -62,8 +72,12 @@ def both_paths(sofar="S"):
     SUU
     """
     "*** YOUR CODE HERE ***"
-
-
+    print(sofar)
+    def up():
+        return both_paths(sofar+'U')
+    def down():
+        return both_paths(sofar+'D')
+    return up, down
 
 def compose1(f, g):
     """Return the composition function which given x, computes f(g(x)).
@@ -97,7 +111,9 @@ def composite_identity(f, g):
     False
     """
     "*** YOUR CODE HERE ***"
-
+    def compare(x):
+        return compose1(f, g)(x) == compose1(g, f)(x)
+    return compare
 
 
 def cycle(f1, f2, f3):
@@ -127,4 +143,19 @@ def cycle(f1, f2, f3):
     19
     """
     "*** YOUR CODE HERE ***"
+    def cycle_n(n):
+        def cycle_x(x):
+            mod = n % 3
+            div = n // 3
+            res = x
+            for i in range(div):
+                res = f3(f2(f1(res)))
+            if mod == 1:
+                res = f1(res)
+            elif mod == 2:
+                res = f2(f1(res))
+            return res
+        return cycle_x 
+    return cycle_n           
+
 
