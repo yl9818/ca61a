@@ -49,3 +49,4 @@ def print_tree(t, indent=0):
     print(' ' * indent + str(label(t)))
     for b in branches(t):
         print_tree(b, indent+1)
+
